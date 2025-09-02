@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+requests
+numpy
+torch
+tensorflow
+scikit-learn
