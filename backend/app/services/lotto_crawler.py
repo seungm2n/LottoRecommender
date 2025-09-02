@@ -17,7 +17,7 @@ def get_lotto_winning_number(round_num: int = None):
         data = response.json()
 
         if data["returnValue"] != "success":
-            logger.warning(f"Lotto data for round {round_num} not found")
+            logger.warning(f"{round_num} 회차 당첨 번호를 찾을 수 없습니다.")
             return None
 
         numbers = [data[f"drwtNo{i}"] for i in range(1, 7)]
@@ -30,7 +30,7 @@ def get_lotto_winning_number(round_num: int = None):
             "bonus": bonus
         }
     except Exception as e:
-        logger.error(f"Error fetching lotto results for round {round_num}: {e}")
+        logger.error(f"당첨 번호 조회 중 오류. 회차 : {round_num}, 내용 : {e}")
         return None
 
 
@@ -39,7 +39,7 @@ def insert_lotto_data_to_db(start_round=1, end_round=None):
     if end_round is None:
         latest_info = get_lotto_winning_number()
         if latest_info is None:
-            logger.error("Failed to get latest lotto round info.")
+            logger.error("최신 회차를 찾을 수 없습니다.")
             db.close()
             return
         end_round = latest_info["draw_no"]
@@ -65,7 +65,7 @@ def insert_lotto_data_to_db(start_round=1, end_round=None):
         )
         db.add(new_draw)
         db.commit()
-        logger.info(f"Saved lotto data for round {round_num}")
-        print(f"Inserting data for round {round_num}")
+
+        print(f"{round_num} 회차 당첨 번호 저장.")
 
     db.close()
