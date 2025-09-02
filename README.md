@@ -62,7 +62,7 @@ cd backend
 pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
-### Frontedn
+### Frontend
 ```bash
 cd frontend
 npm install
